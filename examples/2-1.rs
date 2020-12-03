@@ -1,29 +1,35 @@
 fn main() {
-    println!("{}", INPUT.lines()
-        .filter(|input|
-            match input.split_ascii_whitespace().collect::<Vec<&str>>()[..3] {
-
-                [range_input, char_input, password] => {
-                    match range_input.split("-").map(|s|s.parse::<usize>()
-                        .expect("expected valid integer"))
-                        .collect::<Vec<_>>()[..2] {
-
-                        [min, max] => {
-                            match char_input.split(":").filter_map(|s|s.chars().next())
-                                .collect::<Vec<_>>()[..1] {
-
-                                [char] =>
-                                    (min..=max).contains(
-                                        &password.chars().filter(|&c| c==char).count()),
-                                _ => panic!("failed to parse character input: {}", input),
+    println!(
+        "{}",
+        INPUT
+            .lines()
+            .filter(
+                |input| match input.split_ascii_whitespace().collect::<Vec<&str>>()[..3] {
+                    [range_input, char_input, password] => {
+                        match range_input
+                            .split("-")
+                            .map(|s| s.parse::<usize>().expect("expected valid integer"))
+                            .collect::<Vec<_>>()[..2]
+                        {
+                            [min, max] => {
+                                match char_input
+                                    .split(":")
+                                    .filter_map(|s| s.chars().next())
+                                    .collect::<Vec<_>>()[..1]
+                                {
+                                    [char] => (min..=max)
+                                        .contains(&password.chars().filter(|&c| c == char).count()),
+                                    _ => panic!("failed to parse character input: {}", input),
+                                }
                             }
+                            _ => panic!("failed to parse range input: {}", input),
                         }
-                        _ => panic!("failed to parse range input: {}", input),
                     }
-                },
-                _ => panic!("failed to parse input: {}", input),
-            })
-        .count())
+                    _ => panic!("failed to parse input: {}", input),
+                }
+            )
+            .count()
+    )
 }
 
 const INPUT: &str = "16-18 h: hhhhhhhhhhhhhhhhhh

@@ -1,7 +1,8 @@
 use std::process::exit;
 
 fn main() {
-    let set: std::collections::HashSet<i32> = INPUT.lines()
+    let set: std::collections::HashSet<i32> = INPUT
+        .lines()
         .map(|s| s.parse::<i32>().expect("input should be all integers"))
         .collect();
 
@@ -9,7 +10,7 @@ fn main() {
         for j in set.iter() {
             if i != j {
                 if let Some(k) = set.get(&(2020 - i - j)) {
-                    println!("{} * {} * {} = {}", i, j, k, i*j*k);
+                    println!("{} * {} * {} = {}", i, j, k, i * j * k);
                     exit(0)
                 }
             }

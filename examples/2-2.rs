@@ -1,33 +1,44 @@
 fn main() {
-    println!("{}", INPUT.lines()
-        .filter(|input|
-            match input.split_ascii_whitespace().collect::<Vec<&str>>()[..3] {
-
-                [range_input, char_input, password] => {
-                    match range_input.split("-").map(|s|s.parse::<usize>()
-                        .expect("expected valid integer"))
-                        .collect::<Vec<_>>()[..2] {
-
-                        [pos1, pos2] => {
-                            match char_input.split(":").filter_map(|s|s.chars().next())
-                                .collect::<Vec<_>>()[..1] {
-
-                                [char] =>{
-                                    let char1 = password.chars().nth(pos1-1)
-                                        .expect(&format!("bad index: {}: {}", input, pos1-1));
-                                    let char2 = password.chars().nth(pos2-1)
-                                        .expect(&format!("bad index: {}: {}", input, pos2-1));
-                                    (char1 == char) ^ (char2 == char)
-                                },
-                                _ => panic!("failed to parse character input: {}", input),
+    println!(
+        "{}",
+        INPUT
+            .lines()
+            .filter(
+                |input| match input.split_ascii_whitespace().collect::<Vec<&str>>()[..3] {
+                    [range_input, char_input, password] => {
+                        match range_input
+                            .split("-")
+                            .map(|s| s.parse::<usize>().expect("expected valid integer"))
+                            .collect::<Vec<_>>()[..2]
+                        {
+                            [pos1, pos2] => {
+                                match char_input
+                                    .split(":")
+                                    .filter_map(|s| s.chars().next())
+                                    .collect::<Vec<_>>()[..1]
+                                {
+                                    [char] => {
+                                        let char1 = password
+                                            .chars()
+                                            .nth(pos1 - 1)
+                                            .expect(&format!("bad index: {}: {}", input, pos1 - 1));
+                                        let char2 = password
+                                            .chars()
+                                            .nth(pos2 - 1)
+                                            .expect(&format!("bad index: {}: {}", input, pos2 - 1));
+                                        (char1 == char) ^ (char2 == char)
+                                    }
+                                    _ => panic!("failed to parse character input: {}", input),
+                                }
                             }
+                            _ => panic!("failed to parse position input: {}", input),
                         }
-                        _ => panic!("failed to parse position input: {}", input),
                     }
-                },
-                _ => panic!("failed to parse input: {}", input),
-            })
-        .count())
+                    _ => panic!("failed to parse input: {}", input),
+                }
+            )
+            .count()
+    )
 }
 
 const INPUT: &str = "16-18 h: hhhhhhhhhhhhhhhhhh

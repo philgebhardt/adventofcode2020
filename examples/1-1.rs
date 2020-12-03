@@ -1,12 +1,14 @@
 fn main() {
-    let set: std::collections::HashSet<u32> = INPUT.lines()
+    let set: std::collections::HashSet<u32> = INPUT
+        .lines()
         .map(|s| s.parse::<u32>().expect("input should be all integers"))
         .collect();
-    let (a, b) = set.iter()
-        .filter_map(|i| set.get(&(2020 - i)).map(|j| (i,j)))
+    let (a, b) = set
+        .iter()
+        .filter_map(|i| set.get(&(2020 - i)).map(|j| (i, j)))
         .next()
         .expect("there should be at least one solution");
-    println!("{} * {} = {}", a, b, a*b)
+    println!("{} * {} = {}", a, b, a * b)
 }
 
 // x + y + z = 2020
